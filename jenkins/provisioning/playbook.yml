@@ -15,5 +15,9 @@
       yum: "name=java-1.7.0-openjdk state=absent"
     - name: Install jenkins config with certain JCE features turned off that aren't compatible with openjdk8
       copy: src=../etc_sysconfig_jenkins dest=/etc/sysconfig/jenkins owner=root group=root mode=0600
+    - name: create folder for job
+      file: path=/var/lib/jenkins/jobs/test-slack-job state=directory owner=jenkins group=jenkins mode=0775
+    - name: copy job config
+      copy: src=../config.xml dest=/var/lib/jenkins/jobs/test-slack-job owner=jenkins group=jenkins
     - name: Restart jenkins
       service: name=jenkins state=restarted

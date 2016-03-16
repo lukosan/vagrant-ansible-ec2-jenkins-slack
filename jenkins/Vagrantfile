@@ -18,10 +18,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     aws.access_key_id = ENV['AWS_ACCESS_KEY_ID']			# you can hard code your access key and secret...
     aws.secret_access_key = ENV['AWS_SECRET_ACCESS_KEY']	# ... but it's not a great idea
     
-    aws.keypair_name = "awsroot" 							# <-- change to your ec2 key pair name...
-    override.ssh.private_key_path = "../awsroot.pem" 		# ...and then put your key in this file
+    aws.keypair_name = "awsroot-ireland" 							# <-- change to your ec2 key pair name...
+    override.ssh.private_key_path = "../awsroot-ireland.pem" 		# ...and then put your key in this file
     
-    aws.security_groups = ["my-security-group"] 			# <-- change to your ec2 security group name
+    aws.security_groups = ["devops","formosa-street","luke-roaming"] #["my-security-group"] 			# <-- change to your ec2 security group name
      
     aws.region = "eu-west-1"								# AWS region Ireland
     aws.ami = "ami-a10897d6" 								# this AMI is for eu-west-1 (Ireland)
@@ -46,5 +46,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ansible.sudo = true
     ansible.limit = "all"
   end
+
+  config.vm.provision :shell, inline: "mkdir -p /var/lib/jenkins/.ssh"
+  config.vm.provision :shell, :inline => "echo -e '#{File.read("shared_known_hosts")}' > '/var/lib/jenkins/.ssh/known_hosts'"
+  config.vm.provision :shell, inline: "chmod 0600 /var/lib/jenkins/.ssh/* && chmod 0700 /var/lib/jenkins/.ssh && chown -R jenkins:jenkins /var/lib/jenkins/.ssh"
+  config.vm.provision :shell, :inline => "echo -e '#{File.read("shared_gitconfig")}' > '/var/lib/jenkins/.gitconfig'"
+
 
 end
