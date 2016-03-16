@@ -1,0 +1,19 @@
+---
+- hosts: "tag_Name_jenkins_slack"
+  gather_facts: yes
+
+  vars_files:
+    - vars/main.yml
+
+  roles:
+    - geerlingguy.git
+    - geerlingguy.java
+    - geerlingguy.jenkins
+
+  tasks:
+    - name: Remove Java 7
+      yum: "name=java-1.7.0-openjdk state=absent"
+    - name: Install jenkins config with certain JCE features turned off that aren't compatible with openjdk8
+      copy: src=../etc_sysconfig_jenkins dest=/etc/sysconfig/jenkins owner=root group=root mode=0600
+    - name: Restart jenkins
+      service: name=jenkins state=restarted

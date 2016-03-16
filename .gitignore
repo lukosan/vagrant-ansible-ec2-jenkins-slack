@@ -1,0 +1,33 @@
+# Gradle
+.gradle/
+build/
+
+# Vagrant
+.vagrant/
+*.pem
+*.credentials
+
+# Maven
+target/
+log/
+
+# Misc
+*.log
+
+# Eclipse
+.classpath
+.project
+.springBeans
+.settings/
+.metadata/
+bin/
+
+# GWT
+gwt-unitCache-*
+
+# Mac OSX
+.DS_Store
+
+# IntelliJIDEA
+.idea/
+*.iml
