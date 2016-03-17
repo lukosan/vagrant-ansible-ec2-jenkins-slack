@@ -8,7 +8,7 @@ In order for this to run you need to:
   - Install the vagrant-aws plugin with: `$ vagrant plugin install vagrant-aws`
   - Register a dummy box: `vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box`
   
-## Jenkins
+## Creating a Jenkins instance on EC2
 
 You will need to edit the file jenkins/Vagrantfile and put settings specific to your EC2 configuration.
 
@@ -36,4 +36,10 @@ export AWS_ACCESS_KEY_ID="XxxxxxxxxxxxxxxxxxxxX"
 export AWS_SECRET_ACCESS_KEY="XxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxX"
 ```
 
-so that when I run `bash jenkins-ec2-up.sh` it will `source` the `aws.credentials` file and set them as environment variables before the `vagrant up` command is called. 
+so that when I run `bash jenkins-ec2-up.sh` it will `source` the `aws.credentials` file and set them as environment variables before the `vagrant up` command is called.
+
+## Creating jobs on Jenkins using gradle plugin
+
+`./gradlew updateJenkinsItems` 
+
+For more info on the gradle jenkins plugin, see its project page at [gradle-jenkins-plugin](https://github.com/ghale/gradle-jenkins-plugin/wiki)
