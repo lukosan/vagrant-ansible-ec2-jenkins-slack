@@ -1,0 +1,5 @@
+[user]
+	name = Jenkins
+	email = jenkins@my-test-domain.org
+[push]
+	default = simple

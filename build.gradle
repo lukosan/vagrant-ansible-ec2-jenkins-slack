@@ -1,0 +1,36 @@
+buildscript {
+    repositories {
+		jcenter {
+			url "http://jcenter.bintray.com/"
+		}
+    }
+    dependencies {
+    	classpath "com.terrafolio:gradle-jenkins-plugin:1.2.3"
+    }
+}
+
+apply plugin: 'com.terrafolio.jenkins'
+
+jenkins {
+    servers {
+            aws {
+                    url 'http://ec2-52-48-180-119.eu-west-1.compute.amazonaws.com:8080/'
+                    secure false
+            }
+    }
+    
+	defaultServer servers.aws
+
+	jobs {
+		"config_test" {
+			definition {
+				name "Test config"
+				xml file('jenkins/config.xml')
+			}
+		}
+	}
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.4'
+}
